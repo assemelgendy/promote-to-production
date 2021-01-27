@@ -42,13 +42,12 @@ jobs:
           aws cloudformation delete-stack --stack-name "${PreviousPipelineID}"
 
 workflows:
-    default:
-      jobs:
-        - create_and_deploy_front_end
-        - promote_to_production
-            requires:
-              - create_and_deploy_front_end
-        - clean_up_old_front_end
-            requires:
-              - promote_to_production
-
+  default:
+    jobs:
+      - create_and_deploy_front_end
+      - promote_to_production:
+          requires:
+            - create_and_deploy_front_end
+      - clean_up_old_front_end:
+          requires:
+            - create_and_deploy_front_end
